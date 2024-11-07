@@ -30,3 +30,16 @@ jobs:
         echo "Create LXD image for Launchpad"
         make build-lxd-image
         ls -la
+
+    - name: Find Tar File
+      id: find_tar
+      run: |
+        FILE_PATH=$(ls ubuntu-*.tar.xz | head -n 1)
+        echo "File found: $FILE_PATH"
+        echo "file_path=$FILE_PATH" >> $GITHUB_ENV
+
+    - name: Upload Tar File as GitHub Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: lpdev-lxd-image
+        path: ${{ env.file_path }}
