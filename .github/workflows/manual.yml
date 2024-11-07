@@ -20,6 +20,7 @@ jobs:
         # Place your commands here
         echo "Installing LXD image builder"
         sudo snap install --edge --classic lxd-imagebuilder 
+        sudo apt -y install dpkg-dev
         snap list
         echo "Cloning Launchpad"
         git clone -b use-relative-path-in-lxd-image-build-target https://git.launchpad.net/~tushar5526/launchpad
