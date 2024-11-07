@@ -19,7 +19,7 @@ jobs:
       run: |
         # Place your commands here
         echo "Installing LXD image builder"
-        sudo snap install lxd-imagebuilder --classic
+        sudo snap install --edge lxd-imagebuilder 
         snap list
         echo "Cloning Launchpad"
         git clone https://git.launchpad.net/launchpad
