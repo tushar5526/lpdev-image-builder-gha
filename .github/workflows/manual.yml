@@ -30,7 +30,7 @@ jobs:
         echo "Create LXD image for Launchpad"
         make build-lxd-image
         ls -la
-        FILE_PATH=$(ls ubuntu-*.tar.xz | head -n 1)
+        FILE_PATH=$(realpath $(ls ubuntu-*.tar.xz | head -n 1))
         echo "File found: $FILE_PATH"
         echo "file_path=$FILE_PATH" >> $GITHUB_ENV
 
