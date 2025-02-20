@@ -35,7 +35,7 @@ jobs:
         echo "file_path=$FILE_PATH" >> $GITHUB_ENV
 
     - name: Upload Tar File as GitHub Artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: lpdev-lxd-image
         path: ${{ env.file_path }}
