@@ -7,11 +7,14 @@ jobs:
   build-and-upload:
     runs-on: ubuntu-latest
     steps:
-    - name: Create dummy LXD image file
+        - name: Build artifact (placeholder for test)
       run: |
+        echo "Creating a fresh tarball..."
         mkdir -p artifacts
-        echo "This is a test LXD image file" > artifacts/launchpad-dev.tar.xz
-        echo "file_path=$PWD/artifacts/launchpad-dev.tar.xz" >> $GITHUB_ENV
+        date > artifacts/version.txt
+        tar -cJf artifacts/launchpad-dev.tar.xz -C artifacts version.txt
+      env:
+        file_path: ${{ github.workspace }}/artifacts/launchpad-dev.tar.xz
 
     - name: Delete existing release (if any)
       run: |
@@ -21,8 +24,7 @@ jobs:
         git push origin :refs/tags/latest || true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Checkout repository
-      uses: actions/checkout@v4
+
     - name: Create new tag for latest
       run: |
         echo "Creating new latest tag..."
@@ -34,7 +36,7 @@ jobs:
       with:
         tag_name: latest
         name: "Latest Launchpad Dev Image (Test)"
-        body: "This is the latest build of the Launchpad Dev LXD image. - test tushar"
+        body: "This is the latest build of the Launchpad Dev LXD image."
         files: ${{ env.file_path }}
         draft: false
         prerelease: false
