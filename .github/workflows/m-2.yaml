@@ -7,41 +7,33 @@ jobs:
   build-and-upload:
     runs-on: ubuntu-latest
     steps:
-        - name: Checkout repository
-          uses: actions/checkout@v4
-          
-        - name: Build artifact (placeholder for test)
-          run: |
-            echo "Creating a fresh tarball..."
-            mkdir -p artifacts
-            date > artifacts/version.txt
-            tar -cJf artifacts/launchpad-dev.tar.xz -C artifacts version.txt
-          env:
-            file_path: ${{ github.workspace }}/artifacts/launchpad-dev.tar.xz
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-        - name: Delete existing release (if any)
-          run: |
-            echo "Deleting existing release..."
-            gh release delete latest -y || true
-            git tag -d latest || true
-            git push origin :refs/tags/latest || true
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    
-        - name: Create new tag for latest
-          run: |
-            echo "Creating new latest tag..."
-            git tag latest
-            git push origin latest --force
-    
-        - name: Create fresh release
-          uses: softprops/action-gh-release@v1
-          with:
-            tag_name: latest
-            name: "Latest Launchpad Dev Image (Test)"
-            body: "This is the latest build of the Launchpad Dev LXD image."
-            files: ${{ env.file_path }}
-            draft: false
-            prerelease: false
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build artifacts (placeholder for test)
+        run: |
+          echo "Creating fresh artifacts..."
+          mkdir -p artifacts
+          date > artifacts/version.txt
+          echo "hello world" > artifacts/readme.txt
+          tar -cJf artifacts/launchpad-dev.tar.xz -C artifacts version.txt readme.txt
+
+      - name: Delete existing release (if any)
+        run: |
+          echo "Deleting existing release..."
+          gh release delete latest -y || true
+          git push origin :refs/tags/latest || true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create fresh release with all artifacts
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: latest
+          name: "Latest Launchpad Dev Image (Test)"
+          body: "This is the latest build of the Launchpad Dev LXD image."
+          files: artifacts/**
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
