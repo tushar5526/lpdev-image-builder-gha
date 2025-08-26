@@ -13,19 +13,29 @@ jobs:
         echo "This is a test LXD image file" > artifacts/launchpad-dev.tar.xz
         echo "file_path=$PWD/artifacts/launchpad-dev.tar.xz" >> $GITHUB_ENV
 
-    - name: Delete existing release
+    - name: Delete existing release (if any)
       run: |
+        echo "Deleting existing release..."
         gh release delete latest -y || true
         git tag -d latest || true
         git push origin :refs/tags/latest || true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Create/Update Release
+    - name: Create new tag for latest
+      run: |
+        echo "Creating new latest tag..."
+        git tag latest
+        git push origin latest --force
+
+    - name: Create fresh release
       uses: softprops/action-gh-release@v1
       with:
         tag_name: latest
-        release_name: "Latest Launchpad Dev Image (Test)"
+        name: "Latest Launchpad Dev Image (Test)"
+        body: "This is the latest build of the Launchpad Dev LXD image."
         files: ${{ env.file_path }}
+        draft: false
+        prerelease: false
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
