@@ -29,5 +29,7 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: ${{ env.file_path }}
+        tag_name: latest
+        name: "Launchapd Dev Image Build"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
