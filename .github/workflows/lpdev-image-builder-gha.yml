@@ -12,23 +12,18 @@ jobs:
 
     - name: Build the LP dev LXD image
       run: |
-        # echo "Installing LXD image builder"
-        # sudo snap install --edge --classic lxd-imagebuilder 
-        # sudo add-apt-repository -y universe
-        # sudo apt -y update
-        # sudo apt -y install debootstrap
-        # snap list
-        # echo "Cloning Launchpad"
-        # git clone --progress --verbose -b master https://git.launchpad.net/launchpad
-        # cd launchpad
-        # echo "Create LXD image for Launchpad"
-        # make build-lxd-image
-        # ls -la
-        
-        mkdir -p tempdir
-        echo "temporary test data" > tempdir/test.txt
-        
-        tar -cJf ubuntu-test-2025.tar.xz -C tempdir .
+        echo "Installing LXD image builder"
+        sudo snap install --edge --classic lxd-imagebuilder 
+        sudo add-apt-repository -y universe
+        sudo apt -y update
+        sudo apt -y install debootstrap
+        snap list
+        echo "Cloning Launchpad"
+        git clone --progress --verbose -b master https://git.launchpad.net/launchpad
+        cd launchpad
+        echo "Create LXD image for Launchpad"
+        make build-lxd-image
+
         FILE_PATH=$(realpath $(ls ubuntu-*.tar.xz | head -n 1))
         echo "File found: $FILE_PATH"
 
