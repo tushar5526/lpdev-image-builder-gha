@@ -21,7 +21,8 @@ jobs:
         git push origin :refs/tags/latest || true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+    - name: Checkout repository
+      uses: actions/checkout@v4
     - name: Create new tag for latest
       run: |
         echo "Creating new latest tag..."
