@@ -34,7 +34,7 @@ jobs:
       with:
         tag_name: latest
         name: "Latest Launchpad Dev Image (Test)"
-        body: "This is the latest build of the Launchpad Dev LXD image."
+        body: "This is the latest build of the Launchpad Dev LXD image. - test tushar"
         files: ${{ env.file_path }}
         draft: false
         prerelease: false
