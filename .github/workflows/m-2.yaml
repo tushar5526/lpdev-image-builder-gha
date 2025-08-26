@@ -1,4 +1,4 @@
-name: LP dev image test workflow
+name: LP dev image test workflow - test
 
 on:
   workflow_dispatch:
